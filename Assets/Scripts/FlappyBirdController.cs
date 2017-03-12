@@ -47,7 +47,7 @@ public class FlappyBirdController : MonoBehaviour {
 
 		if (transform.position.y <= -4.5f)
 		{
-			StartCoroutine (ReloadLevel ());
+			Death ();
 		}
 	}
 
@@ -65,16 +65,17 @@ public class FlappyBirdController : MonoBehaviour {
 
 		if (collision.collider.CompareTag ("Pipe")) {
 			// Mooorreu :(
-			StartCoroutine (ReloadLevel ());
+			Death();
+
 		}
 	}
 
-	IEnumerator ReloadLevel()
+	void Death()
 	{
 		isDead = true;
 		my_sounds.PlayDeath ();
 		GetComponent<Collider2D> ().isTrigger = true;
-		yield return new WaitForSeconds (3f);
-		SceneManager.LoadScene ("Game");
+		GameManager.instance.EndGame();
+
 	}
 }
